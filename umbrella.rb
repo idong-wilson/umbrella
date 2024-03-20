@@ -1,12 +1,18 @@
-puts "Hello!"
+puts "Hi!"
 
-puts "Where are you located?"
+puts "What is your name?"
 
-# user_location = gets.chomp
+user_name = gets.chomp
 
-user_location = "Atlanta"
+puts "#{user_name}, where are you located?"
+
+user_location = gets.chomp
+
+# user_location = "Atlanta"
 
 puts user_location
+
+# Fetch latitude and longitude using google maps API
 
 maps_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + user_location + "&key=" + ENV.fetch("GMAPS_KEY")
 
@@ -28,8 +34,40 @@ geo = first_result.fetch("geometry")
 
 loc = geo.fetch("location")
 
-puts latitude = loc.fetch("lat")
-puts longitude = loc.fetch("lng")
+latitude = loc.fetch("lat")
+longitude = loc.fetch("lng")
+
+
+# Assemble URL for the Pirate Weather API
+
+pirate_weather_url = "https://api.pirateweather.net/forecast/#{ENV.fetch('PIRATE_WEATHER_KEY')}/#{latitude},#{longitude}"
+
+# From the Pirate Weather API, fetch weather info
+
+resp = HTTP.get(pirate_weather_url)
+
+weather_info = JSON.parse(resp)
+
+# Fetch the current temperature
+
+current_temp = weather_info["currently"]["temperature"]
+
+puts "The current temperature in #{user_location} is #{current_temp}°F."
+
+
+
+
+
+
+
+
+
+
+
+
+# take the lat/lng
+# Assemble the correct url for the Pirate Weather API
+# Det it, parse it, and dig out the current temperature
 
 
 
