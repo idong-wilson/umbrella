@@ -10,8 +10,6 @@ user_location = gets.chomp
 
 # user_location = "Atlanta"
 
-puts user_location
-
 # Fetch latitude and longitude using google maps API
 
 maps_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + user_location + "&key=" + ENV.fetch("GMAPS_KEY")
@@ -52,15 +50,45 @@ weather_info = JSON.parse(resp)
 
 current_temp = weather_info["currently"]["temperature"]
 
-puts "The current temperature in #{user_location} is #{current_temp}°F."
+puts "The temperature at #{user_location} is currently #{current_temp}°F."
 
+# Show the summary of the weather for the next hour
+require "time"
 
+next_hour_summary = weather_info["hourly"]["summary"]
 
+puts "For the next hour, the sky will be: #{next_hour_summary}"
 
+#Check for precipitation level for the next 12 hours
 
+umbrella_needed = false
+for i in 0..11
 
+  hour_info = weather_info["hourly"]["data"][i]
 
+  hour_time = Time.at(hour_info["time"]).strftime("%l:%M %P")
 
+  precip_probability = hour_info["precipProbability"]
+
+  if precip_probability > 0.1
+
+    umbrella_needed = true
+
+    puts "In #{hour_time}, there's a #{(precip_probability * 100).round}% chance of precipitation."
+
+  end
+
+end
+
+if umbrella_needed
+
+  puts "You might want to carry an umbrella!"
+
+else
+
+  puts "You probably won't need an umbrella today."
+  
+end
 
 
 
