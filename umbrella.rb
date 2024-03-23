@@ -4,7 +4,7 @@ puts "What is your name?"
 
 user_name = gets.chomp
 
-puts "#{user_name}, where are you located?"
+puts "#{user_name}, Where are you?"
 
 user_location = gets.chomp
 
@@ -60,6 +60,24 @@ next_hour_summary = weather_info["hourly"]["summary"]
 puts "For the next hour, the sky will be: #{next_hour_summary}"
 
 #Check for precipitation level for the next 12 hours
+
+# # Get the current hour in local time
+# current_hour = Time.now.hour
+
+# # Display the hourly forecast for the next twelve hours
+# puts "Hourly forecast for the next twelve hours:"
+# for i in 0..11
+#   # Calculate the index of the forecast hour based on the current hour
+#   forecast_hour_index = (current_hour + i) % 24
+#   # Get the weather data for the forecast hour
+#   hour_info = weather_info["hourly"]["data"].find { |data| Time.at(data["time"]).hour == forecast_hour_index }
+#   hour_time = Time.at(hour_info["time"]).strftime("%l:%M %P") # Format time as "8:00 am", "9:00 am", etc.
+#   precip_probability = hour_info["precipProbability"]
+#   puts "#{hour_time}: #{(precip_probability * 100).round}% chance of precipitation."
+# end
+
+
+
 
 umbrella_needed = false
 for i in 0..11
